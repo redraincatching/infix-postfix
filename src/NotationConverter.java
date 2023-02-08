@@ -6,10 +6,10 @@ public class NotationConverter {
     // note: searches for the negation
     Pattern valid = Pattern.compile("[^0-9+\\-*/^()]");
     Matcher validM;
-    private final Stack working = new Stack();  // stack used to interpret
+    private final ArrayStack working = new ArrayStack();  // stack used to interpret
 
     // may drop this one too
-    private final Stack solver = new Stack();   // stack used to solve final postfix expression
+    private final ArrayStack solver = new ArrayStack();   // stack used to solve final postfix expression
 
     public NotationConverter() {
 
@@ -69,6 +69,9 @@ public class NotationConverter {
                         postfix.append(working.pop());
                         working.push(c);
                     }
+                    else {
+                        working.push(c);
+                    }
                 }
             }
         }
@@ -90,11 +93,11 @@ public class NotationConverter {
 
             if (Character.isDigit(c)) {
                 // immediately push any digits
-                solver.push(c - '0');
+                solver.push((double) (c - '0'));
             } else {
                 // because some or the operators are right-associative
-                int operand1 = (int) solver.pop();
-                int operand2 = (int) solver.pop();
+                double operand1 = (double) solver.pop();
+                double operand2 = (double) solver.pop();
 
                 switch (c) {
                     // solve and push
@@ -108,7 +111,7 @@ public class NotationConverter {
         }
 
         // more casts here than on broadway
-        return (double) ((Integer) solver.pop());
+        return (double) (solver.pop());
     }
 
     // helper functions

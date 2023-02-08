@@ -1,63 +1,13 @@
-import javax.swing.JOptionPane;
+/** Abstract Stack interface */
 
-public class Stack {
-    private int index = -1;     // current highest filled index
-    private final int cap;            // manipulable capacity
-    private static final int CAP = 1000;    // default capacity
-    private final Object[] stack;     // the data in the stack
+public interface Stack
+{
+    // most important methods
+    public void   push(Object n); // push an object onto top of the stack
+    public Object pop();    	  // pop an object from top of the stack
 
-    public Stack() {
-        // default constructor
-        this(CAP);
-    }
-
-    public Stack(int capacity) {
-        // overloaded - allows for specified size greater than 0
-        cap = (capacity > 0) ? capacity : CAP;
-        stack = new Object[cap];
-    }
-
-
-    // methods
-    public void push (Object o) {
-        if (isFull()) {
-            JOptionPane.showMessageDialog(null, "[error]: stack is full");
-            return;
-        }
-        stack[++index] = o;
-    }
-
-    public Object pop() {
-        if (isEmpty()) {
-            JOptionPane.showMessageDialog(null, "[error]: stack is empty");
-            return null;
-        }
-        return stack[index--];
-    }
-
-    public Object top() {
-        if (isEmpty()) {
-            JOptionPane.showMessageDialog(null, "[error]: stack is empty");
-            return null;
-        }
-        return stack[index];
-    }
-
-    public int size() {
-        return (index + 1);
-    }
-
-    public boolean isEmpty() {
-        return (index < 0);
-    }
-
-    public boolean isFull() {
-        return (index == cap - 1);
-    }
-
-    public void makeEmpty() {
-        for (Object o : stack) {
-            o = null;
-        }
-    }
+    // others
+    public Object  top(); 		  // examine top object on stack without removing it
+    public boolean isEmpty();     // true if stack is empty
+    public boolean isFull();  	  // true if stack is full (if it has limited storage)
 }
