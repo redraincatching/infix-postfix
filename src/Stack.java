@@ -2,9 +2,9 @@ import javax.swing.JOptionPane;
 
 public class Stack {
     private int index = -1;     // current highest filled index
-    private int cap;            // manipulable capacity
+    private final int cap;            // manipulable capacity
     private static final int CAP = 1000;    // default capacity
-    private Object stack[];     // the data in the stack
+    private final Object[] stack;     // the data in the stack
 
     public Stack() {
         // default constructor
@@ -20,17 +20,26 @@ public class Stack {
 
     // methods
     public void push (Object o) {
-        if (isFull()) { return; }
+        if (isFull()) {
+            JOptionPane.showMessageDialog(null, "[error]: stack is full");
+            return;
+        }
         stack[++index] = o;
     }
 
     public Object pop() {
-        if (isEmpty()) { return null; }
+        if (isEmpty()) {
+            JOptionPane.showMessageDialog(null, "[error]: stack is empty");
+            return null;
+        }
         return stack[index--];
     }
 
     public Object top() {
-        if (isEmpty()) { return null; }
+        if (isEmpty()) {
+            JOptionPane.showMessageDialog(null, "[error]: stack is empty");
+            return null;
+        }
         return stack[index];
     }
 
@@ -39,16 +48,10 @@ public class Stack {
     }
 
     public boolean isEmpty() {
-        if (index < 0) {
-            JOptionPane.showMessageDialog(null, "[error]: stack is empty");
-        }
         return (index < 0);
     }
 
     public boolean isFull() {
-        if (index == cap - 1) {
-            JOptionPane.showMessageDialog(null, "[error]: stack is full");
-        }
         return (index == cap - 1);
     }
 
