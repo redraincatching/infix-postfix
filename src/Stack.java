@@ -1,5 +1,4 @@
 /** Abstract Stack interface */
-
 public interface Stack
 {
     // most important methods
